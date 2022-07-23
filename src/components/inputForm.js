@@ -22,7 +22,7 @@ class NoteForm extends React.Component {
                     <h2>Add Note</h2>
                     <form className="note-input">
                         <input type="text" placeholder="Title" />
-                        <input type="text" placeholder="Content" />
+                        <textarea className="note-desc" placeholder="Description" />
                         <button type="submit">Create Note</button>
                     </form>
                 </div>

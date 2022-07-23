@@ -20,5 +20,41 @@ body {
     margin: 20px 40px;
 }
 
+.note-form {
+    text-align: center;
+}
+
+.note-input {
+    display: flex;
+    flex-direction: column;
+    margin : 10px 35vw;
+}
+
+.note-input > input {
+    background-color: #1a1a1a;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    height: 30px;
+    padding: 12px 0px;
+}
+
+.note-input > input[type='text']::placeholder {
+    font-size: 1.3em;
+    padding-left: 1em !important;
+}
+
+.note-input > .note-desc {
+    background-color: #1a1a1a;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    resize: vertical;
+    height: 50px;
+}
+
+button {
+
+}
+
+
 
 
