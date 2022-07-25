@@ -10,8 +10,16 @@ import ActiveNotes from './components/activeNotes';
 import ArchivedNotes from './components/archivedNotes';
 
 //get data from storage in previous sessions
-const {notes, showFormattedDate : showDate, updateStorage, getStorage} = require('./data/data');
+const {notes, showFormattedDate : showDate} = require('./data/data');
 
+const STORAGE_KEY = 'notes';
+
+function isStorageExist() {
+    if (typeof(Storage) === "undefined") {
+        return false;
+    }
+    return true;
+}
 
 class NotesApp extends React.Component {
     constructor(props) {
@@ -32,10 +40,23 @@ class NotesApp extends React.Component {
         this.archiveNote = this.archiveNote.bind(this);
         this.unarchiveNote = this.unarchiveNote.bind(this);
         this.deleteNote = this.deleteNote.bind(this);
+        this.loadStorage = this.loadStorage.bind(this);
     }
 
     addNote({title, body}) {
+        const newNote = {
+            id: +new Date(),
+            title: title,
+            body: body,
+            createdAt: Date(),
+            archived: false,
+        };
 
+        this.setState((prevState) => {
+            return {
+                notes: [...prevState.notes, newNote]
+            }
+        })
     }
 
     archiveNote(id) {
@@ -50,9 +71,20 @@ class NotesApp extends React.Component {
 
     }
 
+    loadStorage() {
+        if (isStorageExist()) {
+            if (localStorage.getItem(STORAGE_KEY) !== null) {
+                this.state.notes.push(...JSON.parse(localStorage.getItem(STORAGE_KEY)));
+            }
+            else {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.notes));
+            }
+        }
+    }
+
     render() {
         return (
-            <div className="notes-app">
+            <div className="notes-app" onLoad={this.props.loadStorage} >
                 <NoteForm />
                 <ActiveNotes />
                 <ArchivedNotes />
@@ -61,7 +93,6 @@ class NotesApp extends React.Component {
     }
 }
 
-console.log(notes);
 
 const container = createRoot(document.getElementById('container'));
 container.render(<NotesApp />);
