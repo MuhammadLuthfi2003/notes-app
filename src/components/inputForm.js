@@ -1,7 +1,5 @@
 import React from 'react';
 
-//import notes
-const {notes} = require('../data/data');
 
 class NoteForm extends React.Component {
     constructor(props){
@@ -64,6 +62,7 @@ class NoteForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        this.props.addNote(this.state);
     }
 
     render() {
