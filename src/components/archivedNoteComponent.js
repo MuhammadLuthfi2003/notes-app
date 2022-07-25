@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ArchivedNoteComponent({id, title, body, archived, createdAt}) {
+function ArchivedNoteComponent({id, title, body, createdAt}) {
 
 }
 

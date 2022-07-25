@@ -11,8 +11,59 @@ class NoteForm extends React.Component {
         this.state = {
             formTitleCharsRemaining: 50,
             title: '',
-            
+            body: '',
+            createdAt: '',
+            archived: false,
         };
+
+        //handlers
+        this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleBodyChange = this.handleBodyChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    //event handlers
+    handleTitleChange(event) {
+        
+        const title = event.target.value;
+        const titleCharsRemaining = 50 - title.length;
+        this.setState(() => {
+            return {
+                formTitleCharsRemaining: titleCharsRemaining
+            }
+        });
+
+        event.target.style.border = '1px solid #aaa';
+
+        //prevent input after 50 characters have passed
+        if (titleCharsRemaining === 0) {
+            this.setState(() => {
+                return {
+                    formTitleCharsRemaining: 'Max Input Characters Reached!'
+                }
+            })
+
+            event.target.style.border = '1px solid red';
+        }
+
+        //set state for title
+        this.setState(() => {
+            return {
+                title: title
+            }
+        })
+    }
+
+    handleBodyChange(event) {
+        this.setState(() => {
+            return {
+                body: event.target.value
+            }
+        })
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
     }
 
     render() {
@@ -25,12 +76,12 @@ class NoteForm extends React.Component {
                     <h2>Add Note</h2>
                     <div className="note-input__title">
                         <div className="note-input__title__char-limit">
-                            Character Limit : 50
+                            Character Limit Remaining : <span>{this.state.formTitleCharsRemaining}</span>
                         </div>
                     </div>
-                    <form className="note-input">
-                        <input type="text" placeholder="Title" />
-                        <textarea className="note-desc" placeholder="Description" />
+                    <form className="note-input" onSubmit={this.handleSubmit}>
+                        <input type="text" placeholder="Title" onChange={this.handleTitleChange} maxLength='50' id='inputTitle'/>
+                        <textarea className="note-desc" placeholder="Description"  onChange={this.handleBodyChange}/>
                         <button type="submit">Create Note</button>
                     </form>
                 </div>

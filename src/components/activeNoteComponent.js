@@ -1,6 +1,6 @@
 import React from 'react';
 
-function activeNoteComponent({id, title, body, archived, createdAt}) {
+function activeNoteComponent({id, title, body, createdAt}) {
 
 }
 
