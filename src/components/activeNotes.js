@@ -4,8 +4,11 @@ class ActiveNotes extends React.Component{
 
     render() {
         return (
-            <div>
-                <h1>Active Notes</h1>
+            <div className="active-notes">
+                <h1 className="active-notes__title">Active Notes</h1>
+                <div className="notes-list">
+                
+                </div>
             </div>
         );
     }

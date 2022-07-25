@@ -1,7 +1,7 @@
 import React from 'react';
 
 //import notes
-import notes from '../data/data';
+const {notes} = require('../data/data');
 
 class NoteForm extends React.Component {
     constructor(props){
@@ -14,12 +14,16 @@ class NoteForm extends React.Component {
     render() {
         return (
             <div>
-                <div className='note-nav'>
+                <div className='note-app__header'>
                     <h1>Notes App</h1>
                 </div>
-                <div className="note-form">
-                    <h1>Note Form</h1>
+                <div className="note-app__body">
                     <h2>Add Note</h2>
+                    <div className="note-input__title">
+                        <div className="note-input__title__char-limit">
+                            Character Limit : 50
+                        </div>
+                    </div>
                     <form className="note-input">
                         <input type="text" placeholder="Title" />
                         <textarea className="note-desc" placeholder="Description" />

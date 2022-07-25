@@ -4,13 +4,13 @@ import { createRoot } from 'react-dom/client';
 //import css
 import './styles/style.css';
 
-//get data from storage in previous sessions
-import notes from './data/data';
-
 //import components from components folder
 import NoteForm from './components/inputForm';
 import ActiveNotes from './components/activeNotes';
 import ArchivedNotes from './components/archivedNotes';
+
+//get data from storage in previous sessions
+const {notes, showFormattedDate, updateStorage, getStorage} = require('./data/data');
 
 
 class NotesApp extends React.Component {
