@@ -45,29 +45,8 @@ const notes = [
 
 const STORAGE_KEY = 'notes';
 
-function isStorageExist() {
-    if (typeof(Storage) === "undefined") {
-        return false;
-    }
-    return true;
-}
 
-function updateStorage() {
-    if (isStorageExist()) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-    }
-}
 
-function getStorage() {
-    if (isStorageExist()) {
-        if (localStorage.getItem(STORAGE_KEY) !== null) {
-            notes.push(...JSON.parse(localStorage.getItem(STORAGE_KEY)));
-        }
-        else {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-        }
-    }
-}
 
 const showFormattedDate = (date) => {
     const options = {
@@ -79,4 +58,4 @@ const showFormattedDate = (date) => {
     return new Date(date).toLocaleDateString("id-ID", options)
   }
 
-export {notes, showFormattedDate, updateStorage, getStorage};
+export {notes, showFormattedDate};
