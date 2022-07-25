@@ -42,6 +42,7 @@ const notes = [
         archived: false,
       },
 ];
+
 const STORAGE_KEY = 'notes';
 
 function isStorageExist() {

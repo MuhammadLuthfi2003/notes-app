@@ -8,7 +8,11 @@ class NoteForm extends React.Component {
         super(props);
 
         //initialize state
-        this.state = notes;
+        this.state = {
+            formTitleCharsRemaining: 50,
+            title: '',
+            
+        };
     }
 
     render() {

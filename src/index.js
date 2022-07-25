@@ -10,7 +10,7 @@ import ActiveNotes from './components/activeNotes';
 import ArchivedNotes from './components/archivedNotes';
 
 //get data from storage in previous sessions
-const {notes, showFormattedDate, updateStorage, getStorage} = require('./data/data');
+const {notes, showFormattedDate : showDate, updateStorage, getStorage} = require('./data/data');
 
 
 class NotesApp extends React.Component {
@@ -21,12 +21,38 @@ class NotesApp extends React.Component {
         const activeNotes = notes.filter(note => !note.archived);
         
         //initialize state
-        this.state = notes;
+        this.state = {
+            notes: notes,
+            activeNotes: activeNotes,
+            archivedNotes: archivedNotes,
+        };
+
+        //handler
+        this.addNote = this.addNote.bind(this);
+        this.archiveNote = this.archiveNote.bind(this);
+        this.unarchiveNote = this.unarchiveNote.bind(this);
+        this.deleteNote = this.deleteNote.bind(this);
+    }
+
+    addNote({title, body}) {
+
+    }
+
+    archiveNote(id) {
+
+    }
+
+    unarchiveNote(id) {
+
+    }
+
+    deleteNote(id) {
+
     }
 
     render() {
         return (
-            <div>
+            <div className="notes-app">
                 <NoteForm />
                 <ActiveNotes />
                 <ArchivedNotes />

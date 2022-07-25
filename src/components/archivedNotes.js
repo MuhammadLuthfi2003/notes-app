@@ -1,17 +1,18 @@
 import React from 'react';
 
-class ArchivedNotes extends React.Component{
+import archivedNoteComponent from './archivedNoteComponent';
 
-    render() {
-        return (
-            <div className="archived-notes">
-                <h1 className="archived-notes__title">Active Notes</h1>
-                <div className="notes-list">
-                
-                </div>
+function ArchivedNotes(props){
+
+    return (
+        <div className="archived-notes">
+            <h1 className="archived-notes__title">Active Notes</h1>
+            <div className="notes-list">
+            
             </div>
-        );
-    }
+        </div>
+    );
+
 
 }
 
