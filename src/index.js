@@ -68,10 +68,16 @@ class NotesApp extends React.Component {
     }
 
     deleteNote(id) {
-        const notes = this.state.notes.filter(note => note.id !== id);
-        this.setState({notes: notes});
+        //check if user wants to delete the note
+        const confr = window.confirm(`Are you sure you want to delete this note?`);
 
-        this.updateNote(notes);
+        if (confr) {
+            const notes = this.state.notes.filter(note => note.id !== id);
+            this.setState({notes: notes});
+    
+            this.updateNote(notes);
+        }
+        
     }
 
     //TODO
