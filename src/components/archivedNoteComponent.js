@@ -1,7 +1,7 @@
 import React from 'react';
 import UnarchiveBtn from './mini-components/unarchiveBtn';
 import DeleteBtn from './mini-components/deleteBtn'
-import { showFormattedDate } from '../data/index';
+import { showFormattedDate } from '../data/data';
 
 function ArchivedNoteComponent({id, title, body, createdAt , deleteNote, unarchiveNote}) {
     return (

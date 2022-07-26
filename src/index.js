@@ -1,5 +1,3 @@
-// Nama : Muhammad Luthfi Azzahra Rammadhani
-// Kelas : Belajar Membuat Aplikasi Web dengan React
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -12,10 +10,8 @@ import NoteForm from './components/inputForm';
 import ActiveNotes from './components/activeNotes';
 import ArchivedNotes from './components/archivedNotes';
 
-
-import {getInitialData} from './data/index';
-
-const notes= getInitialData();
+//storage key
+const STORAGE_KEY = 'notes';
 
 class NotesApp extends React.Component {
     constructor(props) {
@@ -23,7 +19,7 @@ class NotesApp extends React.Component {
         
         //initialize state
         this.state = {
-            notes: notes,
+            notes: [],
         };
 
         //handler
@@ -31,6 +27,7 @@ class NotesApp extends React.Component {
         this.archiveNote = this.archiveNote.bind(this);
         this.unarchiveNote = this.unarchiveNote.bind(this);
         this.deleteNote = this.deleteNote.bind(this);
+        this.loadNote = this.loadNote.bind(this);
     }
 
     addNote({title, body}) {
@@ -42,28 +39,70 @@ class NotesApp extends React.Component {
             archived: false,
         };
 
+        const updatedNotes = [...this.state.notes, newNote];
+
+        this.updateNote(updatedNotes);
+
         this.setState((prevState) => {
             return {
                 notes: [...prevState.notes, newNote]
             }
         })
+
     }
 
     archiveNote(id) {
         const targetNote = this.state.notes.find(note => note.id === id);
         targetNote.archived = true;
         this.setState({notes: this.state.notes});
+
+        this.updateNote(this.state.notes);
     }
 
     unarchiveNote(id) {
         const targetNote = this.state.notes.find(note => note.id === id);
         targetNote.archived = false;
         this.setState({notes: this.state.notes});
+
+        this.updateNote(this.state.notes);  
     }
 
     deleteNote(id) {
         const notes = this.state.notes.filter(note => note.id !== id);
         this.setState({notes: notes});
+
+        this.updateNote(notes);
+    }
+
+    //TODO
+    // add feature to save in storage
+    updateNote(notes) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+        console.log('updated')
+    }
+
+    // add feature to load from storage
+    loadNote() {
+        if(typeof(Storage) !== 'undefined') {
+            //check if it exists
+            if(localStorage.getItem(STORAGE_KEY)) {
+                const notes = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                this.setState({notes: notes});
+            } else {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.notes));
+
+            }
+            console.log('loaded!');
+        }
+    }
+
+    // add feature to edit notes
+    editNote(id) {
+
+    }
+
+    componentDidMount(){
+        this.loadNote();
     }
 
     render() {
