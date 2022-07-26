@@ -1,15 +1,20 @@
 import React from 'react';
 
-import activeNoteComponent from './activeNoteComponent';
+import ActiveItem from './activeItem';
 
-function ActiveNotes(props){
+function ActiveNotes({notes}){
 
     return (
         <div className="active-notes">
             <h1 className="active-notes__title">Active Notes</h1>
-            <div className="notes-list">
-            
-            </div>
+                {
+                //checks if there is a note which isnt archived
+                 notes.some((note) => !note.archived) 
+                 //if there is, then                     
+                    ? <ActiveItem notes={notes} />
+                // else
+                    : <div className="notes-list__empty-message">No notes</div>
+                }
         </div>
     );
     

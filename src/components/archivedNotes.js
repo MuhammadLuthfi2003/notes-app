@@ -1,15 +1,22 @@
 import React from 'react';
 
-import archivedNoteComponent from './archivedNoteComponent';
+import ArchivedNoteComponent from './archivedNoteComponent';
 
-function ArchivedNotes(props){
+function ArchivedNotes({notes}){
 
     return (
         <div className="archived-notes">
-            <h1 className="archived-notes__title">Active Notes</h1>
-            <div className="notes-list">
-            
-            </div>
+            <h1 className="archived-notes__title">Archived Notes</h1>
+
+                {
+                //checks if there is a note which isnt archived
+                 notes.some((note) => note.archived) 
+                 //if there is, then                     
+                    ? <ArchivedNoteComponent notes={notes} />
+                // else
+                    : <div className="notes-list__empty-message">No notes</div>
+                }
+
         </div>
     );
 

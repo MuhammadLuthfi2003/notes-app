@@ -60,7 +60,7 @@ class NotesApp extends React.Component {
     }
 
     archiveNote(id) {
-
+        
     }
 
     unarchiveNote(id) {
@@ -68,7 +68,8 @@ class NotesApp extends React.Component {
     }
 
     deleteNote(id) {
-
+        const notes = this.state.notes.filter(note => note.id !== id);
+        this.setState({notes: notes});
     }
 
     loadStorage() {
@@ -84,10 +85,10 @@ class NotesApp extends React.Component {
 
     render() {
         return (
-            <div className="notes-app" onLoad={this.props.loadStorage} >
-                <NoteForm />
-                <ActiveNotes />
-                <ArchivedNotes />
+            <div className="notes-app" >
+                <NoteForm addNote={this.addNote}/>
+                <ActiveNotes notes={this.state.notes} deleteNote={this.deleteNote} archiveNote={this.archiveNote}/>
+                <ArchivedNotes notes={this.state.notes} deleteNote={this.deleteNote} unarchiveNote={this.unarchiveNote}/>
             </div>
         )
     }
