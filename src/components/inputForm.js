@@ -29,6 +29,9 @@ class NoteForm extends React.Component {
         
         const title = event.target.value;
         const titleCharsRemaining = 50 - title.length;
+
+        this.titleInput.current.style.border = '1px solid #aaa';
+
         this.setState(() => {
             return {
                 formTitleCharsRemaining: titleCharsRemaining
@@ -57,6 +60,8 @@ class NoteForm extends React.Component {
     }
 
     handleBodyChange(event) {
+        this.bodyInput.current.style.border = '1px solid #aaa';
+
         this.setState(() => {
             return {
                 body: event.target.value
