@@ -18,6 +18,10 @@ class NoteForm extends React.Component {
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleBodyChange = this.handleBodyChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        //refs
+        this.titleInput = React.createRef();
+        this.bodyInput = React.createRef();
     }
 
     //event handlers
@@ -62,7 +66,23 @@ class NoteForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.addNote(this.state);
+
+        //get value
+        const titleLength = this.titleInput.current.value.length;
+        const bodyLength = this.bodyInput.current.value.length;
+
+        if (titleLength > 0 && bodyLength > 0) {
+            this.props.addNote(this.state);
+        }
+        else if (titleLength === 0) {
+            this.titleInput.current.style.border = '1px solid red';
+            alert("Please input title")
+            
+        }
+        else if (bodyLength === 0) {
+            this.bodyInput.current.style.border = '1px solid red';
+            alert("Please input description")
+        }
     }
 
     render() {
@@ -79,8 +99,8 @@ class NoteForm extends React.Component {
                         </div>
                     </div>
                     <form className="note-input" onSubmit={this.handleSubmit}>
-                        <input type="text" placeholder="Title" onChange={this.handleTitleChange} maxLength='50' id='inputTitle'/>
-                        <textarea className="note-desc" placeholder="Description"  onChange={this.handleBodyChange}/>
+                        <input type="text" placeholder="Title" onChange={this.handleTitleChange} maxLength='50' id='inputTitle' ref={this.titleInput}/>
+                        <textarea className="note-desc" placeholder="Description"  onChange={this.handleBodyChange} ref={this.bodyInput}/>
                         <button type="submit">Create Note</button>
                     </form>
                 </div>
