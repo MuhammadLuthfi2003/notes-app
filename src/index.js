@@ -106,6 +106,7 @@ class NotesApp extends React.Component {
     // add feature to edit notes
     editNote(id) {
         const targetNote = this.state.notes.find(note => note.id === id);
+
         console.log(targetNote);
     }
 
@@ -116,6 +117,8 @@ class NotesApp extends React.Component {
     render() {
         return (
             <div className="notes-app" >
+
+                {/* TODO: add modal later on */}
                 <NoteForm addNote={this.addNote}/>
                 <ActiveNotes notes={this.state.notes} deleteNote={this.deleteNote} archiveNote={this.archiveNote} editNote={this.editNote}/>
                 <ArchivedNotes notes={this.state.notes} deleteNote={this.deleteNote} unarchiveNote={this.unarchiveNote}/>
