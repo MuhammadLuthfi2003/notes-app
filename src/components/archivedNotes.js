@@ -1,8 +1,8 @@
 import React from 'react';
 
-import ArchivedNoteComponent from './archivedNoteComponent';
+import ArchivedItem from './archiveItem';
 
-function ArchivedNotes({notes}){
+function ArchivedNotes({notes, deleteNote, unarchiveNote}) {
 
     return (
         <div className="archived-notes">
@@ -12,7 +12,7 @@ function ArchivedNotes({notes}){
                 //checks if there is a note which isnt archived
                  notes.some((note) => note.archived) 
                  //if there is, then                     
-                    ? <ArchivedNoteComponent notes={notes} />
+                    ? <ArchivedItem notes={notes} deleteNote={deleteNote} unarchiveNote={unarchiveNote}/>
                 // else
                     : <div className="notes-list__empty-message">No notes</div>
                 }

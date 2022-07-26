@@ -3,7 +3,7 @@ import ArchiveButton from './mini-components/archiveBtn';
 import DeleteButton from './mini-components/deleteBtn'
 import { showFormattedDate } from '../data/index';
 
-function activeNoteComponent({id, title, body, createdAt}) {
+function activeNoteComponent({id, title, body, createdAt , deleteNote, archiveNote}) {
     return (
         <div className='note-item'>
             <div className='note-item__content'>
@@ -21,8 +21,8 @@ function activeNoteComponent({id, title, body, createdAt}) {
                 </div>
 
                 <div className='note-item__action'>
-                        <ArchiveButton className='note-item__archive-button' id={id} />
-                        <DeleteButton className='note-item__delete-button' id={id} />
+                        <ArchiveButton className='note-item__archive-button' id={id} archiveNote={archiveNote}/>
+                        <DeleteButton className='note-item__delete-button' id={id} deleteNote={deleteNote}/>
                 </div>
                 
             </div>

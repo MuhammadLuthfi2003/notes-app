@@ -1,3 +1,6 @@
+// Nama : Muhammad Luthfi Azzahra Rammadhani
+// Kelas : Belajar Membuat Aplikasi Web dengan React
+
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -9,30 +12,18 @@ import NoteForm from './components/inputForm';
 import ActiveNotes from './components/activeNotes';
 import ArchivedNotes from './components/archivedNotes';
 
-//get data from storage in previous sessions
-const {notes, showFormattedDate : showDate} = require('./data/data');
 
-const STORAGE_KEY = 'notes';
+import {getInitialData} from './data/index';
 
-function isStorageExist() {
-    if (typeof(Storage) === "undefined") {
-        return false;
-    }
-    return true;
-}
+const notes= getInitialData();
 
 class NotesApp extends React.Component {
     constructor(props) {
         super(props);
-
-        const archivedNotes = notes.filter(note => note.archived);
-        const activeNotes = notes.filter(note => !note.archived);
         
         //initialize state
         this.state = {
             notes: notes,
-            activeNotes: activeNotes,
-            archivedNotes: archivedNotes,
         };
 
         //handler
@@ -40,7 +31,6 @@ class NotesApp extends React.Component {
         this.archiveNote = this.archiveNote.bind(this);
         this.unarchiveNote = this.unarchiveNote.bind(this);
         this.deleteNote = this.deleteNote.bind(this);
-        this.loadStorage = this.loadStorage.bind(this);
     }
 
     addNote({title, body}) {
@@ -60,27 +50,20 @@ class NotesApp extends React.Component {
     }
 
     archiveNote(id) {
-        
+        const targetNote = this.state.notes.find(note => note.id === id);
+        targetNote.archived = true;
+        this.setState({notes: this.state.notes});
     }
 
     unarchiveNote(id) {
-
+        const targetNote = this.state.notes.find(note => note.id === id);
+        targetNote.archived = false;
+        this.setState({notes: this.state.notes});
     }
 
     deleteNote(id) {
         const notes = this.state.notes.filter(note => note.id !== id);
         this.setState({notes: notes});
-    }
-
-    loadStorage() {
-        if (isStorageExist()) {
-            if (localStorage.getItem(STORAGE_KEY) !== null) {
-                this.state.notes.push(...JSON.parse(localStorage.getItem(STORAGE_KEY)));
-            }
-            else {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.notes));
-            }
-        }
     }
 
     render() {
