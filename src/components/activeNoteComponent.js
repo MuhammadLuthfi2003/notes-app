@@ -1,9 +1,11 @@
 import React from 'react';
 import ArchiveButton from './mini-components/archiveBtn';
-import DeleteButton from './mini-components/deleteBtn'
+import DeleteButton from './mini-components/deleteBtn';
+import EditButton from './mini-components/editBtn';
+
 import { showFormattedDate } from '../data/data';
 
-function activeNoteComponent({id, title, body, createdAt , deleteNote, archiveNote}) {
+function activeNoteComponent({id, title, body, createdAt , deleteNote, archiveNote, editNote}) {
     return (
         <div className='note-item'>
             <div className='note-item__content'>
@@ -22,8 +24,11 @@ function activeNoteComponent({id, title, body, createdAt , deleteNote, archiveNo
 
                 <div className='note-item__action'>
                         <ArchiveButton className='note-item__archive-button' id={id} archiveNote={archiveNote}/>
+                        <EditButton className='note-item__edit-button' id={id} editNote={editNote}/>
                         <DeleteButton className='note-item__delete-button' id={id} deleteNote={deleteNote}/>
                 </div>
+
+                
                 
             </div>
         </div>

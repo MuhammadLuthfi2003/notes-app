@@ -2,7 +2,7 @@ import React from 'react';
 
 import ActiveItem from './activeItem';
 
-function ActiveNotes({notes, deleteNote, archiveNote}) {
+function ActiveNotes({notes, deleteNote, archiveNote, editNote}) {
 
     return (
         <div className="active-notes">
@@ -11,7 +11,7 @@ function ActiveNotes({notes, deleteNote, archiveNote}) {
                 //checks if there is a note which isnt archived
                  notes.some((note) => !note.archived) 
                  //if there is, then                     
-                    ? <ActiveItem notes={notes} deleteNote={deleteNote} archiveNote={archiveNote}/>
+                    ? <ActiveItem notes={notes} deleteNote={deleteNote} archiveNote={archiveNote} editNote={editNote}/>
                 // else
                     : <div className="notes-list__empty-message">No notes</div>
                 }

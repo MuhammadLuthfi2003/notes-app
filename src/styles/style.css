@@ -154,7 +154,7 @@ input::placeholder, textarea::placeholder {
   justify-content: space-between;
 }
 
-.note-item__delete-button,.note-item__archive-button {
+.note-item__delete-button,.note-item__archive-button, .note-item__edit-button {
   display: block;
   width: 100%;
   background-color: transparent;
@@ -177,6 +177,11 @@ input::placeholder, textarea::placeholder {
   border-radius: 4px 0 0 4px;
 }
 
+.note-item__edit-button {
+  border-right: 1px solid #aaa;
+  color: #002aff;
+}
+
 .note-item__archive-button:hover {
   background-color: #c49000;
   color: #000;
@@ -185,6 +190,11 @@ input::placeholder, textarea::placeholder {
 .note-item__delete-button:hover {
   background-color: #b00020;
   color: rgb(255, 255, 255);
+}
+
+.note-item__edit-button:hover {
+  background-color: #254aff;
+  color: #fff;
 }
 
 .active-notes__title, .archived-notes__title {
