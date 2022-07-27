@@ -26,6 +26,11 @@ class NotesApp extends React.Component {
         this.state = {
             notes: [],
             modalIsOpen: false,
+            editedNotes: {
+                id: '',
+                title: '',
+                body: ''
+            }
         };
 
         //handler
@@ -39,6 +44,9 @@ class NotesApp extends React.Component {
         //binding modal handlers
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.changeNote = this.changeNote.bind(this);
+        this.transferData = this.transferData.bind(this);
+
     }
 
     addNote({title, body}) {
@@ -122,9 +130,28 @@ class NotesApp extends React.Component {
         this.setState({modalIsOpen: false});
     }
 
+    changeNote(id, newTitle, newDesc) {
+        // get note id
+        const targetNote = this.state.notes.find(note => note.id === id);
+        // update note
+        targetNote.title = newTitle;
+        targetNote.body = newDesc;
+        // update state and storage
+        this.setState({notes: this.state.notes});
+        this.updateNote(this.state.notes);
+        
+    }
+    //transfers note data to edit form
+    transferData(id) {
+        const targetNote = this.state.notes.find(note => note.id === id);
+        this.setState({editedNotes: targetNote});
+    }
+
     // add feature to edit notes
     editNote(id) {
+        this.transferData(id);
         this.openModal();
+        
     }
 
     componentDidMount(){
@@ -146,7 +173,17 @@ class NotesApp extends React.Component {
                         <button class='close-btn' onClick={this.closeModal}>&times;</button>
                     </div>
                     <div className='EditForm-body'>
-                        
+                        <form>
+                            {/*TODO: add counter in the modal */}
+                            <div className='note-input__title__char'>
+                                Character Limit Remaining : 50
+                            </div>
+                            <form className='note-input'>
+                                <input type="text" placeholder="Title" value={this.state.editedNotes.title}/>
+                                <textarea className="note-desc" placeholder="Description" value={this.state.editedNotes.body} />
+                                <button type="submit">Edit Note</button>
+                            </form>
+                        </form>
                     </div>
                 </ReactModal>
 
