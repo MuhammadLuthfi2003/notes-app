@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
+import ReactModal from 'react-modal';
 
 //import css
 import './styles/style.css';
@@ -13,6 +15,9 @@ import ArchivedNotes from './components/archivedNotes';
 //storage key
 const STORAGE_KEY = 'notes';
 
+//set modal element
+ReactModal.setAppElement('#container');
+
 class NotesApp extends React.Component {
     constructor(props) {
         super(props);
@@ -20,6 +25,7 @@ class NotesApp extends React.Component {
         //initialize state
         this.state = {
             notes: [],
+            modalIsOpen: false,
         };
 
         //handler
@@ -29,6 +35,10 @@ class NotesApp extends React.Component {
         this.deleteNote = this.deleteNote.bind(this);
         this.loadNote = this.loadNote.bind(this);
         this.editNote = this.editNote.bind(this);
+
+        //binding modal handlers
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     addNote({title, body}) {
@@ -103,11 +113,18 @@ class NotesApp extends React.Component {
         }
     }
 
+    //modal handlers
+    openModal() {
+        this.setState({modalIsOpen: true});
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
+    }
+
     // add feature to edit notes
     editNote(id) {
-        const targetNote = this.state.notes.find(note => note.id === id);
-
-        console.log(targetNote);
+        this.openModal();
     }
 
     componentDidMount(){
@@ -116,12 +133,30 @@ class NotesApp extends React.Component {
 
     render() {
         return (
-            <div className="notes-app" >
+            <div className="container" >
+                {/* modal to pop up edit form*/}
+                <ReactModal
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose= {this.closeModal}
+                    className='EditForm'
+                    overlayClassName='Overlay'
+                >
+                    <div className='EditForm-header'>
+                        <h2>Edit Note</h2>
+                        <button class='close-btn' onClick={this.closeModal}>&times;</button>
+                    </div>
+                    <div className='EditForm-body'>
+                        
+                    </div>
+                </ReactModal>
 
-                {/* TODO: add modal later on */}
-                <NoteForm addNote={this.addNote}/>
-                <ActiveNotes notes={this.state.notes} deleteNote={this.deleteNote} archiveNote={this.archiveNote} editNote={this.editNote}/>
-                <ArchivedNotes notes={this.state.notes} deleteNote={this.deleteNote} unarchiveNote={this.unarchiveNote}/>
+                <div>
+                    <div className="notes-app">
+                        <NoteForm addNote={this.addNote}/>
+                        <ActiveNotes notes={this.state.notes} deleteNote={this.deleteNote} archiveNote={this.archiveNote} editNote={this.editNote}/>
+                        <ArchivedNotes notes={this.state.notes} deleteNote={this.deleteNote} unarchiveNote={this.unarchiveNote}/>
+                    </div>
+                </div>
             </div>
         )
     }

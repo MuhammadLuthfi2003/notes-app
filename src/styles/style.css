@@ -223,3 +223,49 @@ input::placeholder, textarea::placeholder {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+.EditForm {
+  top: 100%;
+  left: 50%;
+  /* margin-right: -50%; */
+  /* transform: translate(-50%, -50%); */
+  background-color: #202124;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  padding: 10px 15px;
+  width: 500px;
+  max-width: 80%;
+  height: 500px;
+  max-height: 80%;
+}
+
+.EditForm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 3px solid #aaa;
+}
+
+.close-btn {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.close-btn:hover {
+  color: #fff;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
