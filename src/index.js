@@ -111,7 +111,6 @@ class NotesApp extends React.Component {
     // add feature to save in storage
     updateNote(notes) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-        console.log('updated')
     }
 
     // add feature to load from storage
@@ -125,7 +124,6 @@ class NotesApp extends React.Component {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state.notes));
 
             }
-            console.log('loaded!');
         }
     }
 
@@ -193,10 +191,9 @@ class NotesApp extends React.Component {
         event.preventDefault();
 
         const titleLength = this.editTitle.current.value.length;
-        const bodyLength = this.bodyInput.current.value.length;
+        const bodyLength = this.editBody.current.value.length;
 
         if (titleLength > 0 && bodyLength > 0) {
-            event.preventDefault();
             this.changeNote(this.state.editedNotesId, this.state.editedNotes.title, this.state.editedNotes.body);
             this.closeModal();
         }
@@ -213,6 +210,15 @@ class NotesApp extends React.Component {
     }
 
     changeNote(id, newTitle, newDesc) {
+        //find the note
+        const targetNote = this.state.notes.find(note => note.id === id);
+        //change it with the new property
+        targetNote.title = newTitle;
+        targetNote.body = newDesc;
+        //update the state
+        this.setState({notes: this.state.notes});
+        //update the storage
+        this.updateNote(this.state.notes);
 
     }
 
@@ -259,8 +265,6 @@ class NotesApp extends React.Component {
                         <button class='close-btn' onClick={this.closeModal}>&times;</button>
                     </div>
                     <div className='EditForm-body'>
-                        <form>
-                            {/*TODO: add counter in the modal */}
                             <div className='note-input__title'>
                                 <div className='note-input__title__char-limit edit-form-title'>
                                     Character Limit Remaining : <span>{this.state.editedNotes.remainingChars}</span>
@@ -272,7 +276,6 @@ class NotesApp extends React.Component {
                                 <textarea className="note-desc" placeholder="Description" value={this.state.editedNotes.body} ref={this.editBody} onChange={this.handleBodyChange}/>
                                 <button type="submit">Edit Note</button>
                             </form>
-                        </form>
                     </div>
                 </ReactModal>
 
