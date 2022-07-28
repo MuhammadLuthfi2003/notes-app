@@ -94,7 +94,8 @@ class NoteForm extends React.Component {
         return (
             <div>
                 <div className='note-app__header'>
-                    <h1>Notes App</h1>
+                    <h1 className='credit-title'><a href='https://github.com/MuhammadLuthfi2003/notes-app' target='blank'>Notes App</a></h1>
+                    <h3 className='credit-title'>By <a href='https://github.com/MuhammadLuthfi2003' target='blank'>@MuhammadLuthfi2003</a></h3>
                 </div>
                 <div className="note-app__body">
                     <h2>Add Note</h2>

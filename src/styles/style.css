@@ -279,3 +279,25 @@ input::placeholder, textarea::placeholder {
   overflow-y: scroll;
   max-height: 38vh;
 }
+
+.credit-title a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.credit-title a:hover {
+  color: #aaa;
+}
+
+.credit-title a:active {
+  color: #fff;
+}
+
+.credit-title a:visited {
+  color: #fff;
+}
+
+.credit-title {
+  color: #aaa;
+
+}
