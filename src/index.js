@@ -27,10 +27,12 @@ class NotesApp extends React.Component {
             notes: [],
             modalIsOpen: false,
             editedNotes: {
-                id: '',
                 title: '',
-                body: ''
-            }
+                body: '',
+                remainingChars: 50,
+            },
+            editedNotesId: '',
+            editedNotesDate: '',
         };
 
         //handler
@@ -46,7 +48,13 @@ class NotesApp extends React.Component {
         this.closeModal = this.closeModal.bind(this);
         this.changeNote = this.changeNote.bind(this);
         this.transferData = this.transferData.bind(this);
+        this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleBodyChange = this.handleBodyChange.bind(this);
+        this.handleEditSubmit = this.handleEditSubmit.bind(this);
 
+        //refs
+        this.editTitle = React.createRef();
+        this.editBody = React.createRef();
     }
 
     addNote({title, body}) {
@@ -130,21 +138,98 @@ class NotesApp extends React.Component {
         this.setState({modalIsOpen: false});
     }
 
-    changeNote(id, newTitle, newDesc) {
-        // get note id
-        const targetNote = this.state.notes.find(note => note.id === id);
-        // update note
-        targetNote.title = newTitle;
-        targetNote.body = newDesc;
-        // update state and storage
-        this.setState({notes: this.state.notes});
-        this.updateNote(this.state.notes);
-        
+    //edit form change handlers
+    handleTitleChange(event) {
+        const title = event.target.value;
+        const remainingChars = 50 - title.length;
+        const body = this.editBody.current.value;
+
+        this.editTitle.current.style.border = '1px solid #aaa';
+
+        this.setState(() => {
+            return {
+                editedNotes: {
+                    title: title,
+                    body: body,
+                    remainingChars: remainingChars,
+                }
+            }
+        })
+
+        if (remainingChars === 0) {
+            this.setState(() => {
+                return {
+                    editedNotes: {
+                        title: title,
+                        body: body,
+                        remainingChars: 'Max Input Characters Reached!',
+                    }
+                }
+            })
+
+            event.target.style.border = '1px solid red';
+        }
     }
+
+    handleBodyChange(event) {
+        const title = this.editTitle.current.value;
+        const remainingChars = this.state.editedNotes.remainingChars;
+        const body = event.target.value
+
+        this.editBody.current.style.border = '1px solid #aaa';
+
+        this.setState(() => {
+            return {
+                editedNotes: {
+                    title: title,
+                    body: body,
+                    remainingChars: remainingChars,
+                }
+            }
+        })
+    }
+
+    handleEditSubmit(event) {
+        event.preventDefault();
+
+        const titleLength = this.editTitle.current.value.length;
+        const bodyLength = this.bodyInput.current.value.length;
+
+        if (titleLength > 0 && bodyLength > 0) {
+            event.preventDefault();
+            this.changeNote(this.state.editedNotesId, this.state.editedNotes.title, this.state.editedNotes.body);
+            this.closeModal();
+        }
+
+        else if (titleLength === 0) {
+            this.editTitle.current.style.border = '1px solid red';
+            alert("Please Input The New Title!");
+        }
+        else if (bodyLength === 0) {
+            this.editBody.current.style.border = '1px solid red';
+            alert("Please Input The New Description!");
+        }
+
+    }
+
+    changeNote(id, newTitle, newDesc) {
+
+    }
+
     //transfers note data to edit form
     transferData(id) {
         const targetNote = this.state.notes.find(note => note.id === id);
-        this.setState({editedNotes: targetNote});
+        this.setState(() => {
+            return {
+                editedNotes: {
+                    title: targetNote.title,
+                    body: targetNote.body,
+                    remainingChars: 50 - targetNote.title.length,
+                },
+                editedNotesId: targetNote.id,
+                editedNotesDate: targetNote.createdAt,
+            }
+        });
     }
 
     // add feature to edit notes
@@ -167,6 +252,7 @@ class NotesApp extends React.Component {
                     onRequestClose= {this.closeModal}
                     className='EditForm'
                     overlayClassName='Overlay'
+                    preventScroll={true}
                 >
                     <div className='EditForm-header'>
                         <h2>Edit Note</h2>
@@ -175,12 +261,15 @@ class NotesApp extends React.Component {
                     <div className='EditForm-body'>
                         <form>
                             {/*TODO: add counter in the modal */}
-                            <div className='note-input__title__char'>
-                                Character Limit Remaining : 50
+                            <div className='note-input__title'>
+                                <div className='note-input__title__char-limit edit-form-title'>
+                                    Character Limit Remaining : <span>{this.state.editedNotes.remainingChars}</span>
+                                </div>
+
                             </div>
-                            <form className='note-input'>
-                                <input type="text" placeholder="Title" value={this.state.editedNotes.title}/>
-                                <textarea className="note-desc" placeholder="Description" value={this.state.editedNotes.body} />
+                            <form className='note-input' onSubmit={this.handleEditSubmit}>
+                                <input type="text" placeholder="Title" value={this.state.editedNotes.title} ref={this.editTitle} maxLength='50' onChange={this.handleTitleChange}/>
+                                <textarea className="note-desc" placeholder="Description" value={this.state.editedNotes.body} ref={this.editBody} onChange={this.handleBodyChange}/>
                                 <button type="submit">Edit Note</button>
                             </form>
                         </form>

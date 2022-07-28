@@ -269,3 +269,7 @@ input::placeholder, textarea::placeholder {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.edit-form-title {
+  margin-top: 1em;
+}
