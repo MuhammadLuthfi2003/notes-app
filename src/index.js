@@ -273,7 +273,7 @@ class NotesApp extends React.Component {
                             </div>
                             <form className='note-input' onSubmit={this.handleEditSubmit}>
                                 <input type="text" placeholder="Title" value={this.state.editedNotes.title} ref={this.editTitle} maxLength='50' onChange={this.handleTitleChange}/>
-                                <textarea className="note-desc" placeholder="Description" value={this.state.editedNotes.body} ref={this.editBody} onChange={this.handleBodyChange}/>
+                                <textarea className="note-desc edit-desc" placeholder="Description" value={this.state.editedNotes.body} ref={this.editBody} onChange={this.handleBodyChange}/>
                                 <button type="submit">Edit Note</button>
                             </form>
                     </div>
